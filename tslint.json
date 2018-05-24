@@ -8,6 +8,7 @@
     "interface-name": {
       "options": ["never-prefix"]
     },
-    "ordered-imports": false
+    "ordered-imports": false,
+    "object-literal-sort-keys": false
   }
 }

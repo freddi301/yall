@@ -16,7 +16,7 @@ export const Argument = ({ name, onSelect }: { name: React.ReactNode; onSelect: 
 
 export const Abstraction = ({ head, body, onSelect }: { head: React.ReactNode; body: React.ReactNode; onSelect: () => void }) => (
   <span>
-    {head} <span onClick={onSelect}>=></span> {body}
+    ({head} <span onClick={onSelect}>=></span> {body})
   </span>
 );
 
