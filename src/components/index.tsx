@@ -1,53 +1,75 @@
 import * as React from 'react';
 
-export const Reference = ({ name }: { name: React.ReactNode }) => <span>{name}</span>;
+export const Reference = ({ name, onSelect }: { name: React.ReactNode; onSelect: () => void }) => <span onClick={onSelect}>{name}</span>;
 
-export const Application = ({ left, right }: { left: React.ReactNode; right: React.ReactNode }) => (
+export const Application = ({ left, right, onSelect }: { left: React.ReactNode; right: React.ReactNode; onSelect: () => void }) => (
   <span>
-    ({left} {right})
+    <span onClick={onSelect}>(</span>
+    {left}
+    <span onClick={onSelect}>&nbsp;</span>
+    {right}
+    <span onClick={onSelect}>)</span>
   </span>
 );
 
-export const Abstraction = ({ head, body }: { head: React.ReactNode; body: React.ReactNode }) => (
+export const Argument = ({ name, onSelect }: { name: React.ReactNode; onSelect: () => void }) => <span onClick={onSelect}>{name}</span>;
+
+export const Abstraction = ({ head, body, onSelect }: { head: React.ReactNode; body: React.ReactNode; onSelect: () => void }) => (
   <span>
-    {head} => {body}
+    {head} <span onClick={onSelect}>=></span> {body}
   </span>
 );
 
-export const Ast = ({ ast }: { ast: Ast }): JSX.Element => {
+const AstVisitor = ({ path, onSelect }: { path: string[]; onSelect: (path: string[]) => void }) => {
+  const select = (value: string[]) => () => onSelect(value);
+  return {
+    reference({ ast }: { ast: Reference }) {
+      return <Reference name={ast.name} onSelect={select(path)} />;
+    },
+    application({ ast }: { ast: Application }) {
+      const left = <Ast ast={ast.left} path={[...path, 'left']} onSelect={onSelect} />;
+      const right = <Ast ast={ast.right} path={[...path, 'right']} onSelect={onSelect} />;
+      return <Application left={left} right={right} onSelect={select(path)} />;
+    },
+    abstraction({ ast }: { ast: Abstraction }) {
+      const head = <Argument name={<span>{ast.head.name}</span>} onSelect={select([...path, 'head'])} />;
+      const body = <Ast ast={ast.body} path={[...path, 'body']} onSelect={onSelect} />;
+      return <Abstraction head={head} body={body} onSelect={select(path)} />;
+    },
+    argument({ ast }: { ast: Argument }) {
+      return <Argument name={ast.name} onSelect={select(path)} />;
+    }
+  };
+};
+
+export const Ast = ({ ast, path, onSelect }: { ast: Ast | Argument; path: string[]; onSelect: (path: string[]) => void }): JSX.Element => {
+  const visitor = AstVisitor({ path, onSelect });
   switch (ast.kind) {
     case 'reference':
-      return <Reference name={ast.name} />;
+      return visitor.reference({ ast });
     case 'application':
-      const left = <Ast ast={ast.left} />;
-      const right = <Ast ast={ast.right} />;
-      return <Application left={left} right={right} />;
+      return visitor.application({ ast });
     case 'abstraction':
-      const head = <Reference name={ast.head} />;
-      const body = <Ast ast={ast.body} />;
-      return <Abstraction head={head} body={body} />;
+      return visitor.abstraction({ ast });
+    case 'argument':
+      return visitor.argument({ ast });
+    default:
+      return (
+        <>
+          <span>invalid ast</span>
+          <pre>{JSON.stringify(ast, null, 2)}</pre>
+        </>
+      );
   }
 };
 
 export type Reference = { kind: 'reference'; name: string };
 export type Application = { kind: 'application'; left: Ast; right: Ast };
-export type Abstraction = { kind: 'abstraction'; head: string; body: Ast };
+export type Argument = { kind: 'argument'; name: string };
+export type Abstraction = { kind: 'abstraction'; head: Argument; body: Ast };
 export type Ast = Reference | Application | Abstraction;
 
 export const ref = (name: string): Reference => ({ kind: 'reference', name });
 export const app = (left: Ast, right: Ast): Application => ({ kind: 'application', left, right });
-export const abs = (head: string, body: Ast): Abstraction => ({ kind: 'abstraction', head, body });
-
-export class Observable<T> extends React.Component<
-  { view: (props: { value: T; update: (value: T) => Promise<void> }) => React.ReactNode },
-  { value: T },
-  {}
-> {
-  update = (value: T): Promise<void> => new Promise(resolve => this.setState({ value }, resolve));
-  render() {
-    const { view } = this.props;
-    const { value } = this.state;
-    const update = this.update;
-    return view({ update, value });
-  }
-}
+export const arg = (name: string): Argument => ({ kind: 'argument', name });
+export const abs = (head: Argument, body: Ast): Abstraction => ({ kind: 'abstraction', head, body });
