@@ -20,20 +20,30 @@ export const Abstraction = ({ head, body, onSelect }: { head: React.ReactNode; b
   </span>
 );
 
-const AstVisitor = ({ path, onSelect }: { path: string[]; onSelect: (path: string[]) => void }) => {
-  const select = (value: string[]) => () => onSelect(value);
+export type AstPath = string[];
+
+const AstVisitor = ({
+  path,
+  onSelect,
+  override
+}: {
+  path: AstPath;
+  onSelect: (path: AstPath) => void;
+  override: (path: AstPath) => React.ReactNode | null;
+}) => {
+  const select = (value: AstPath) => () => onSelect(value);
   return {
     reference({ ast }: { ast: Reference }) {
       return <Reference name={ast.name} onSelect={select(path)} />;
     },
     application({ ast }: { ast: Application }) {
-      const left = <Ast ast={ast.left} path={[...path, 'left']} onSelect={onSelect} />;
-      const right = <Ast ast={ast.right} path={[...path, 'right']} onSelect={onSelect} />;
+      const left = Ast({ ast: ast.left, path: [...path, 'left'], onSelect, override });
+      const right = Ast({ ast: ast.right, path: [...path, 'right'], onSelect, override });
       return <Application left={left} right={right} onSelect={select(path)} />;
     },
     abstraction({ ast }: { ast: Abstraction }) {
       const head = <Argument name={<span>{ast.head.name}</span>} onSelect={select([...path, 'head'])} />;
-      const body = <Ast ast={ast.body} path={[...path, 'body']} onSelect={onSelect} />;
+      const body = Ast({ ast: ast.body, path: [...path, 'body'], onSelect, override });
       return <Abstraction head={head} body={body} onSelect={select(path)} />;
     },
     argument({ ast }: { ast: Argument }) {
@@ -42,8 +52,21 @@ const AstVisitor = ({ path, onSelect }: { path: string[]; onSelect: (path: strin
   };
 };
 
-export const Ast = ({ ast, path, onSelect }: { ast: Ast | Argument; path: string[]; onSelect: (path: string[]) => void }): JSX.Element => {
-  const visitor = AstVisitor({ path, onSelect });
+export type AstView = (
+  args: {
+    ast: Ast | Argument;
+    path: AstPath;
+    onSelect: (path: AstPath) => void;
+    override: (path: AstPath) => React.ReactNode;
+  }
+) => React.ReactNode;
+
+export const Ast: AstView = ({ ast, path, onSelect, override }) => {
+  const overrode = override(path);
+  if (overrode) {
+    return overrode;
+  }
+  const visitor = AstVisitor({ path, onSelect, override });
   switch (ast.kind) {
     case 'reference':
       return visitor.reference({ ast });
