@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import * as React from 'react';
 import styled from 'styled-components';
 import * as main from '../';
@@ -18,6 +19,12 @@ export const ViewIde: ObservableView<IdeState> = ({ value: { ast, selected }, up
     update({ ast, selected: path });
   };
   const override = ideOverride({ state: { ast, selected }, update });
+  const hihglightSelected = (path: main.AstPath) => {
+    if (_.isEqual(selected, path)) {
+      return (children: React.ReactNode) => <div style={{ border: '1px solid black', display: 'inline-block' }}>{children}</div>;
+    }
+    return main.NoDecoration;
+  };
   return (
     <>
       <div>
@@ -27,7 +34,7 @@ export const ViewIde: ObservableView<IdeState> = ({ value: { ast, selected }, up
         </Grid>
         <Path path={selected} onSelect={select} />
         <br />
-        <Code key="code">{main.Ast({ ast, path: [], onSelect: select, override })}</Code>
+        <Code key="code">{main.Ast({ ast, path: [], onSelect: select, override, decorate: hihglightSelected })}</Code>
       </div>
     </>
   );

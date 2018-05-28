@@ -25,11 +25,13 @@ export type AstPath = string[];
 const AstVisitor = ({
   path,
   onSelect,
-  override
+  override,
+  decorate
 }: {
   path: AstPath;
   onSelect: (path: AstPath) => void;
   override: (path: AstPath) => React.ReactNode | null;
+  decorate: (path: AstPath) => (child: React.ReactNode) => React.ReactNode;
 }) => {
   const select = (value: AstPath) => () => onSelect(value);
   return {
@@ -37,13 +39,13 @@ const AstVisitor = ({
       return <Reference name={ast.name} onSelect={select(path)} />;
     },
     application({ ast }: { ast: Application }) {
-      const left = Ast({ ast: ast.left, path: [...path, 'left'], onSelect, override });
-      const right = Ast({ ast: ast.right, path: [...path, 'right'], onSelect, override });
+      const left = Ast({ ast: ast.left, path: [...path, 'left'], onSelect, override, decorate });
+      const right = Ast({ ast: ast.right, path: [...path, 'right'], onSelect, override, decorate });
       return <Application left={left} right={right} onSelect={select(path)} />;
     },
     abstraction({ ast }: { ast: Abstraction }) {
       const head = <Argument name={<span>{ast.head.name}</span>} onSelect={select([...path, 'head'])} />;
-      const body = Ast({ ast: ast.body, path: [...path, 'body'], onSelect, override });
+      const body = Ast({ ast: ast.body, path: [...path, 'body'], onSelect, override, decorate });
       return <Abstraction head={head} body={body} onSelect={select(path)} />;
     },
     argument({ ast }: { ast: Argument }) {
@@ -56,26 +58,29 @@ export type AstView = (
   args: {
     ast: Ast | Argument;
     path: AstPath;
-    onSelect: (path: AstPath) => void;
-    override: (path: AstPath) => React.ReactNode;
+    onSelect?: (path: AstPath) => void;
+    override?: (path: AstPath) => React.ReactNode;
+    decorate?: (path: AstPath) => (child: React.ReactNode) => React.ReactNode;
   }
 ) => React.ReactNode;
 
-export const Ast: AstView = ({ ast, path, onSelect, override }) => {
+export const NoDecoration = (children: React.ReactNode) => children;
+
+export const Ast: AstView = ({ ast, path, onSelect = () => null, override = () => null, decorate = () => NoDecoration }) => {
   const overrode = override(path);
   if (overrode) {
     return overrode;
   }
-  const visitor = AstVisitor({ path, onSelect, override });
+  const visitor = AstVisitor({ path, onSelect, override, decorate });
   switch (ast.kind) {
     case 'reference':
-      return visitor.reference({ ast });
+      return decorate(path)(visitor.reference({ ast }));
     case 'application':
-      return visitor.application({ ast });
+      return decorate(path)(visitor.application({ ast }));
     case 'abstraction':
-      return visitor.abstraction({ ast });
+      return decorate(path)(visitor.abstraction({ ast }));
     case 'argument':
-      return visitor.argument({ ast });
+      return decorate(path)(visitor.argument({ ast }));
     default:
       return (
         <>
