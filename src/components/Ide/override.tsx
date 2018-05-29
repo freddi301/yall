@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { Ast, AstPath, Reference } from '..';
 import * as lens from '../../util/lens';
-import { Input } from './Input';
+import { Input } from '../Input';
 import { IdeState } from './ViewIde';
 
 export const override = ({ state, update }: { state: IdeState; update: (state: IdeState) => void }) => (path: AstPath) => {
