@@ -1,9 +1,9 @@
 import * as React from 'react';
-import * as main from './';
+import { AstPath } from './AstInterpreter';
 
-const select = (path: main.AstPath, onSelect: (path: main.AstPath) => void) => () => onSelect(path);
+const select = (path: AstPath, onSelect: (path: AstPath) => void) => () => onSelect(path);
 
-export const Path = ({ path, onSelect }: { path: main.AstPath; onSelect: (path: main.AstPath) => void }) => (
+export const Path = ({ path, onSelect }: { path: AstPath; onSelect: (path: AstPath) => void }) => (
   <span>
     <span onClick={select([], onSelect)}>⌂</span>
     {path.map((item, index) => (
