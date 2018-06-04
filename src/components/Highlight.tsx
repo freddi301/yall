@@ -5,7 +5,7 @@ import { Ast, AstComponent, AstPath } from './AstInterpreter';
 
 export const Highlight = styled.div`
   display: inline-block;
-  background-color: gray;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2), 0 0 20px 0 rgba(0, 0, 0, 0.19);
 `;
 
 export const render = ({ selected }: { selected: AstPath }): AstComponent<Ast> => ({ ast, path, eventDispatch, children }) => {

@@ -15,12 +15,12 @@ export class Input extends React.Component<{ value: string; onChange?: (value: s
   private onKeyPress = (e: React.KeyboardEvent<{}>) => {
     if (e.key === 'Enter' && this.props.onChange) {
       this.props.onChange(this.state.text);
-      this.input.blur();
+      // this.input.blur(); // TODO: fix
     }
   };
   private input: HTMLInputElement;
   public componentDidMount() {
-    this.input.focus();
+    // this.input.focus(); // TODO: fix
   }
   private setInputReference = (input: HTMLInputElement) => (this.input = input);
   public render() {

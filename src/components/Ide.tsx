@@ -10,6 +10,7 @@ import * as Highlight from './Highlight';
 import { ObservableView } from './ObservableView';
 import { Path } from './Path';
 import * as Reference from './Reference';
+import { Suggestions } from './Suggestion';
 
 export type IdeState = { ast: Ast; selected: AstPath };
 
@@ -36,14 +37,21 @@ export const Ide: ObservableView<IdeState> = ({ value: ideState, update }) => {
       update({ ...ideState, ast: newAst });
     }
   };
+  const keyCommand = (e: any) => {
+    if (e.key === '\\' && _.get(ast, selected, ast).kind === Reference.kind) {
+      eventDispatch.replace({ path: selected, ast: Abstraction.abs(Argument.arg(_.get(ast, selected, ast).name), Reference.ref('_')) });
+    }
+  };
   return (
     <>
       <div>
         <Path path={selected} onSelect={eventDispatch.select} />
         <br />
-        <code>
+        <code onKeyPress={keyCommand}>
           <AstView ast={ast} path={[]} eventDispatch={eventDispatch} view={AstView} />
         </code>
+        <Suggestions />
+        implement copy paste here
       </div>
     </>
   );
