@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Ast, AstComponent, onEventNop, AstComponentView } from './AstInterpreter';
+import { Ast, AstComponent, AstComponentView, onEventNop } from './AstInterpreter';
 
 export const kind = 'application';
 
@@ -29,7 +29,7 @@ export const render: AstComponent<Application> = ({ ast, path, eventDispatch, ch
       <Application
         left={<View ast={ast.left} path={path.concat('left')} eventDispatch={eventDispatch} view={View} />}
         right={<View ast={ast.right} path={path.concat('right')} eventDispatch={eventDispatch} view={View} />}
-        onEvent={{ ...onEventNop, select: () => eventDispatch.select(path) }}
+        onEvent={{ ...onEventNop, select: () => eventDispatch.select({ path }) }}
       >
         {children}
       </Application>

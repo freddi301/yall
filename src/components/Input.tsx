@@ -14,8 +14,8 @@ export class Input extends React.Component<{ value: string; onChange?: (value: s
   private onChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => this.setState({ text: value });
   private onKeyPress = (e: React.KeyboardEvent<{}>) => {
     if (e.key === 'Enter' && this.props.onChange) {
-      this.input.blur();
       this.props.onChange(this.state.text);
+      this.input.blur();
     }
   };
   private input: HTMLInputElement;

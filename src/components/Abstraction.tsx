@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { AstComponent, Ast, AstComponentView, onEventNop } from './AstInterpreter';
+import { Argument } from './Argument';
+import { Ast, AstComponent, AstComponentView, onEventNop } from './AstInterpreter';
 
 export const kind = 'abstraction';
 
@@ -27,9 +28,9 @@ export const render: AstComponent<Abstraction> = ({ ast, path, eventDispatch, vi
   if (ast.kind === kind) {
     return (
       <Abstraction
-        head={<Argument name={ast.head.name} />}
+        head={<View ast={ast.head} path={path.concat('head')} eventDispatch={eventDispatch} view={View} />}
         body={<View ast={ast.body} path={path.concat('body')} eventDispatch={eventDispatch} view={View} />}
-        onEvent={{ ...onEventNop, select: () => eventDispatch.select(path) }}
+        onEvent={{ ...onEventNop, select: () => eventDispatch.select({ path }) }}
       >
         {children}
       </Abstraction>
@@ -37,11 +38,3 @@ export const render: AstComponent<Abstraction> = ({ ast, path, eventDispatch, vi
   }
   return <>{children}</>;
 };
-
-const argumentKind = 'abstraction/argument';
-
-export type Argument = { kind: typeof argumentKind; name: string };
-
-export const Argument = ({ name }: { name: React.ReactNode }) => <span>{name}</span>;
-
-export const arg = (name: string): Argument => ({ kind: argumentKind, name });

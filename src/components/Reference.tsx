@@ -16,7 +16,7 @@ export const Reference: AstComponentView<{ name: React.ReactNode }> = ({ name, o
 export const render: AstComponent<Reference> = ({ ast, path, eventDispatch, children }) => {
   if (ast.kind === kind) {
     return (
-      <Reference name={(ast as any).name} onEvent={{ ...onEventNop, select: () => eventDispatch.select(path) }}>
+      <Reference name={(ast as any).name} onEvent={{ ...onEventNop, select: () => eventDispatch.select({ path }) }}>
         {children}
       </Reference>
     );

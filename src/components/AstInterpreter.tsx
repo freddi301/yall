@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { UnknownAst } from './UnknownAst';
 
-export type Ast = { kind: string };
+export type Ast = { kind: string; [index: string]: any };
 
 export type AstComponent<T> = React.ComponentType<AstComponentProps<T>>;
 export type AstComponentProps<T> = {
@@ -32,8 +32,9 @@ export const AstInterpreter = ({ components }: { components: Array<AstComponent<
 export type AstPath = string[];
 
 export type EventDispatch = {
-  select: (path: AstPath) => void;
-  hover: (path: AstPath) => void;
+  select: (args: { path: AstPath }) => void;
+  hover: (args: { path: AstPath }) => void;
+  replace: (args: { path: AstPath; ast: Ast }) => void;
 };
 
 export type OnEvent = {
@@ -42,8 +43,9 @@ export type OnEvent = {
 };
 
 export const eventDispatchNop: EventDispatch = {
-  select: (path: AstPath) => undefined,
-  hover: (path: AstPath) => undefined
+  select: (args: { path: AstPath }) => undefined,
+  hover: (args: { path: AstPath }) => undefined,
+  replace: (args: { path: AstPath; ast: Ast }) => undefined
 };
 
 export const onEventNop: OnEvent = {
