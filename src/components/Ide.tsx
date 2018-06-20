@@ -5,6 +5,7 @@ import * as Abstraction from './Abstraction';
 import * as Application from './Application';
 import * as Argument from './Argument';
 import { Ast, AstInterpreter, AstPath, EventDispatch, eventDispatchNop } from './AstInterpreter';
+import { Commands } from './Commands';
 import * as EditLabel from './EditLabel';
 import * as Highlight from './Highlight';
 import { KeepFocus } from './KeepFocus';
@@ -50,16 +51,7 @@ export const Ide: ObservableView<IdeState> = ({ value: ideState, update }) => {
           </KeepFocus>
         </KeyCommands>
         <Suggestions />
-        <div>
-          <button onClick={() => eventDispatch.replace({ path: selected, ast: Abstraction.abs(Argument.arg('_'), Reference.ref('_')) })}>
-            abstraction
-          </button>
-          <button onClick={() => eventDispatch.replace({ path: selected, ast: Application.app(Reference.ref('_'), Reference.ref('_')) })}>
-            application
-          </button>
-          <button onClick={() => eventDispatch.replace({ path: selected, ast: Reference.ref('_') })}>reference</button>
-        </div>
-        implement copy paste here
+        <Commands ast={ast} selected={selected} eventDispatch={eventDispatch} />
       </div>
     </>
   );

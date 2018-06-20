@@ -21,7 +21,7 @@ const keyCommand = ({ selected, ast, eventDispatch }: KeyCommandsArgs) => (e: Re
     // TODO: focus on right
     eventDispatch.replace({ path: selected, ast: Application.app(selectedAst, Reference.ref('_')) });
   } else if (
-    e.key === 'Backspace' &&
+    e.key === 'r' &&
     (selectedAst.kind === Reference.kind || selectedAst.kind === Abstraction.kind || selectedAst.kind === Application.kind)
   ) {
     eventDispatch.replace({ path: selected, ast: Reference.ref('_') });

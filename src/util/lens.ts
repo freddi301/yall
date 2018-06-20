@@ -1,10 +1,10 @@
 export const get = Symbol('get');
 export const set = Symbol('set');
 
-export interface Lens<T, V> {
+export type Lens<T, V> = {
   [get]: (o: T) => V;
   [set]: (v: V) => (t: T) => T;
-}
+};
 
 export const identity = <T>(): Lens<T, T> => ({
   [get]: t => t,
@@ -24,11 +24,11 @@ export const propertiesRecursive = <P, T>(p: Lens<P, T>): PropertiesLens<P, T> =
   new Proxy(p, {
     get(o, k) {
       if (k === get || k === set) {
-        return p[k];
+        return (p as any)[k];
       } else if (typeof k === 'string') {
         return propertiesRecursive(compose(p, property(k as keyof T)));
       } else {
-        return o[k];
+        return (o as any)[k];
       }
     }
   }) as PropertiesLens<P, T>;
