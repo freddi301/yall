@@ -16,7 +16,7 @@ export const Argument: AstComponentView<{ name: React.ReactNode }> = ({ name, on
 export const render: AstComponent<Argument> = ({ ast, path, eventDispatch, children }) => {
   if (ast.kind === kind) {
     return (
-      <Argument name={(ast as any).name} onEvent={{ ...onEventNop, select: () => eventDispatch.select({ path }) }}>
+      <Argument name={ast.name} onEvent={{ ...onEventNop, select: () => eventDispatch.select({ path }) }}>
         {children}
       </Argument>
     );

@@ -7,6 +7,8 @@ import * as Argument from './Argument';
 import { Ast, AstInterpreter, AstPath, EventDispatch, eventDispatchNop } from './AstInterpreter';
 import * as EditLabel from './EditLabel';
 import * as Highlight from './Highlight';
+import { KeepFocus } from './KeepFocus';
+import { KeyCommands } from './KeyCommands';
 import { ObservableView } from './ObservableView';
 import { Path } from './Path';
 import * as Reference from './Reference';
@@ -37,34 +39,16 @@ export const Ide: ObservableView<IdeState> = ({ value: ideState, update }) => {
       update({ ...ideState, ast: newAst });
     }
   };
-  const keyCommand = (e: any) => {
-    const selectedAst = _.get(ast, selected, ast);
-    if (e.key === '\\' && selectedAst.kind === Reference.kind) {
-      // TODO: focus on body
-      eventDispatch.replace({ path: selected, ast: Abstraction.abs(Argument.arg(_.get(ast, selected, ast).name), Reference.ref('_')) });
-    } else if (
-      e.key === ' ' &&
-      (selectedAst.kind === Reference.kind || selectedAst.kind === Abstraction.kind || selectedAst.kind === Application.kind)
-    ) {
-      // TODO: focus on right
-      eventDispatch.replace({ path: selected, ast: Application.app(selectedAst, Reference.ref('_')) });
-    } else if (
-      e.key === 'Backspace' &&
-      (selectedAst.kind === Reference.kind || selectedAst.kind === Abstraction.kind || selectedAst.kind === Application.kind)
-    ) {
-      eventDispatch.replace({ path: selected, ast: Reference.ref('_') });
-    }
-  };
   return (
     <>
       <div>
         <Path path={selected} onSelect={eventDispatch.select} />
         <br />
-        <code onKeyPress={keyCommand}>
+        <KeyCommands ast={ast} selected={selected} eventDispatch={eventDispatch}>
           <KeepFocus>
             <AstView ast={ast} path={[]} eventDispatch={eventDispatch} view={AstView} />
           </KeepFocus>
-        </code>
+        </KeyCommands>
         <Suggestions />
         <div>
           <button onClick={() => eventDispatch.replace({ path: selected, ast: Abstraction.abs(Argument.arg('_'), Reference.ref('_')) })}>
@@ -74,30 +58,9 @@ export const Ide: ObservableView<IdeState> = ({ value: ideState, update }) => {
             application
           </button>
           <button onClick={() => eventDispatch.replace({ path: selected, ast: Reference.ref('_') })}>reference</button>
-          <button onClick={(e: any) => e.target.focus()} onKeyPress={keyCommand}>
-            focus
-          </button>
         </div>
         implement copy paste here
       </div>
     </>
   );
 };
-
-class KeepFocus extends React.Component<{}, {}> {
-  public render() {
-    return (
-      <div tabIndex={0} ref={this.setElement}>
-        {this.props.children}
-      </div>
-    );
-  }
-  public componentDidUpdate() {
-    if (!this.element.contains(document.activeElement)) {
-      this.element.focus();
-    }
-    console.log(document.activeElement); //tslint:disable-line
-  }
-  private element: HTMLDivElement;
-  private setElement = (element: HTMLDivElement) => (this.element = element);
-}
