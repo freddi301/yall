@@ -1,9 +1,9 @@
 import * as React from 'react';
+import { IdeState } from '../Ide/state';
 import * as Abstraction from './Abstraction';
 import * as Application from './Application';
 import * as Argument from './Argument';
 import { EventDispatch } from './AstInterpreter';
-import { IdeState } from './Ide';
 import * as Reference from './Reference';
 
 type CommandsArgs = IdeState & { eventDispatch: EventDispatch };
