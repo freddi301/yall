@@ -3,4 +3,4 @@ import { ApplicationVisualCommand } from '../../plugins/Application/visualComman
 import { ReferenceVisualCommand } from '../../plugins/Reference/visualCommand';
 import { VisualCommand } from '../VisualCommands/VisualCommand';
 
-export const dafaultVisualCommands: VisualCommand[] = [AbstractionVisualCommand, ApplicationVisualCommand, ReferenceVisualCommand];
+export const defaultVisualCommands: VisualCommand[] = [AbstractionVisualCommand, ApplicationVisualCommand, ReferenceVisualCommand];
