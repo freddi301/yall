@@ -23,7 +23,7 @@ export const ReferenceKeyboardCommand: KeyboardCommand = {
     );
   },
   action({ state, update }) {
-    const { selected, ast } = state;
+    const { selected } = state;
     update(replace({ path: selected, ast: ref('_') })(state));
   }
 };

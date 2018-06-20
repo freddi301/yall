@@ -31,9 +31,9 @@ export const KeyboardCommands: React.StatelessComponent<IdeControl & { keyboardC
     }
   };
   return (
-    <KeepFocus>
-      <div onKeyPress={onKeyPress}>{children}</div>
-    </KeepFocus>
+    <div onKeyPress={onKeyPress}>
+      <KeepFocus>{children}</KeepFocus>
+    </div>
   );
 };
 

@@ -12,11 +12,12 @@ export const BlankInput = styled.input`
 export class Input extends React.Component<{ value: string; onChange?: (value: string) => void }, { text: string }> {
   public state = { text: this.props.value };
   private onChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => this.setState({ text: value });
-  private onKeyPress = (e: React.KeyboardEvent<{}>) => {
+  private onKeyPress = (e: React.KeyboardEvent<HTMLElement>) => {
     if (e.key === 'Enter' && this.props.onChange) {
       this.props.onChange(this.state.text);
-      // this.input.blur(); // TODO: fix
+      this.input.blur(); // TODO: fix
     }
+    e.stopPropagation();
   };
   private input: HTMLInputElement;
   public componentDidMount() {
