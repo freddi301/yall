@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
-import { Ast, AstComponent, AstPath } from '../../components/AstInterpreter';
 import { Input } from '../../components/Input';
+import { Ast, AstComponent, AstPath } from '../../Ide/AstView/AstInterpreter';
 import * as Argument from '../Argument/Argument';
 import * as Reference from '../Reference/Reference';
 

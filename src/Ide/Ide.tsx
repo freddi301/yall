@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { Ast, AstPath, EventDispatch, eventDispatchNop } from '../components/AstInterpreter';
-import { Commands } from '../components/Commands';
 import { KeepFocus } from '../components/KeepFocus';
-import { KeyCommands } from '../components/KeyCommands';
-import { Path } from '../components/Path';
-import { Suggestions } from '../components/Suggestion';
-import { ObservableView } from '../util/ObservableView';
+import { ObservableView } from '../components/ObservableView';
+import { Ast, AstPath, EventDispatch, eventDispatchNop } from '../Ide/AstView/AstInterpreter';
+import { Path } from '../Ide/Path';
+import { Suggestions } from '../Ide/VisualCommands/Suggestion';
+import { VisualCommands } from '../Ide/VisualCommands/VisualCommands';
 import * as actions from './actions';
 import { astView } from './astView';
+import { KeyboardCommands } from './KeyboardCommands/KeyboardCommands';
 import { IdeState } from './state';
 
 export const Ide: ObservableView<IdeState> = ({ value: ideState, update }) => {
@@ -28,13 +28,13 @@ export const Ide: ObservableView<IdeState> = ({ value: ideState, update }) => {
       <div>
         <Path path={selected} onSelect={eventDispatch.select} />
         <br />
-        <KeyCommands ast={ast} selected={selected} eventDispatch={eventDispatch}>
+        <KeyboardCommands ast={ast} selected={selected} eventDispatch={eventDispatch}>
           <KeepFocus>
             <AstView ast={ast} path={[]} eventDispatch={eventDispatch} view={AstView} />
           </KeepFocus>
-        </KeyCommands>
+        </KeyboardCommands>
         <Suggestions />
-        <Commands ast={ast} selected={selected} eventDispatch={eventDispatch} />
+        <VisualCommands ast={ast} selected={selected} eventDispatch={eventDispatch} />
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { Ast, AstPath } from '../components/AstInterpreter';
+import { Ast, AstPath } from '../Ide/AstView/AstInterpreter';
 import * as lens from '../util/lens';
 import { IdeState } from './state';
 

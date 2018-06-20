@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 import styled from 'styled-components';
-import { Ast, AstComponent, AstPath } from '../../components/AstInterpreter';
+import { Ast, AstComponent, AstPath } from '../../Ide/AstView/AstInterpreter';
 
 export const Highlight = styled.div`
   display: inline-block;

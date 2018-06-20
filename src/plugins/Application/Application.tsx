@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Ast, AstComponent, AstComponentView, onEventNop } from '../../components/AstInterpreter';
+import { Ast, AstComponent, AstComponentView, onEventNop } from '../../Ide/AstView/AstInterpreter';
 
 export const kind = 'application';
 

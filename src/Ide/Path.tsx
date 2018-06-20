@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AstPath } from './AstInterpreter';
+import { AstPath } from './AstView/AstInterpreter';
 
 const select = (path: AstPath, onSelect: (args: { path: AstPath }) => void) => () => onSelect({ path });
 

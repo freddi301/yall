@@ -1,4 +1,4 @@
-import { AstInterpreter } from '../components/AstInterpreter';
+import { AstInterpreter } from '../Ide/AstView/AstInterpreter';
 import * as Abstraction from '../plugins/Abstraction/Abstraction';
 import * as Application from '../plugins/Application/Application';
 import * as Argument from '../plugins/Argument/Argument';
