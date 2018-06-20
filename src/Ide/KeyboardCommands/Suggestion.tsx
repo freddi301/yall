@@ -10,7 +10,6 @@ const Key = styled.kbd`
   margin: 1px;
 `;
 
-// TODO: implement
 export const Suggestions = () => (
   <div>
     <Key>\</Key> abstraction<br />

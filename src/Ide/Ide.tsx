@@ -2,13 +2,16 @@ import * as React from 'react';
 import { KeepFocus } from '../components/KeepFocus';
 import { ObservableView } from '../components/ObservableView';
 import { Ast, AstPath, EventDispatch, eventDispatchNop } from '../Ide/AstView/AstInterpreter';
+import { Suggestions } from '../Ide/KeyboardCommands/Suggestion';
 import { Path } from '../Ide/Path';
-import { Suggestions } from '../Ide/VisualCommands/Suggestion';
 import { VisualCommands } from '../Ide/VisualCommands/VisualCommands';
 import * as actions from './actions';
-import { astView } from './astView';
+import { astView } from './default/astView';
+import { dafaultVisualCommands } from './default/visualCommands';
 import { KeyboardCommands } from './KeyboardCommands/KeyboardCommands';
 import { IdeState } from './state';
+
+export type IdeControl = { state: IdeState; update: (state: IdeState) => Promise<void> };
 
 export const Ide: ObservableView<IdeState> = ({ value: ideState, update }) => {
   const { ast, selected } = ideState;
@@ -34,7 +37,7 @@ export const Ide: ObservableView<IdeState> = ({ value: ideState, update }) => {
           </KeepFocus>
         </KeyboardCommands>
         <Suggestions />
-        <VisualCommands ast={ast} selected={selected} eventDispatch={eventDispatch} />
+        <VisualCommands state={ideState} update={update} visualCommands={dafaultVisualCommands} />
       </div>
     </>
   );

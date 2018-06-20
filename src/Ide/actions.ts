@@ -8,7 +8,7 @@ export const select = ({ path }: { path: AstPath }) => (ideState: IdeState): Ide
 };
 
 export const replace = (args: { path: AstPath; ast: Ast }) => (ideState: IdeState): IdeState => {
-  const astLens: lens.Lens<Ast, Ast> = _.get(lens.properties<Ast>(), args.path, lens.identity);
+  const astLens: lens.Lens<Ast, Ast> = _.get(lens.properties<Ast>(), args.path, lens.identity());
   const newAst = astLens[lens.set](args.ast)(ideState.ast);
   return { ...ideState, ast: newAst };
 };
