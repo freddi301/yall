@@ -1,11 +1,11 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 import { IdeState } from '../Ide/state';
-import * as Abstraction from './Abstraction';
-import * as Application from './Application';
-import * as Argument from './Argument';
+import * as Abstraction from '../plugins/Abstraction/Abstraction';
+import * as Application from '../plugins/Application/Application';
+import * as Argument from '../plugins/Argument/Argument';
+import * as Reference from '../plugins/Reference/Reference';
 import { EventDispatch } from './AstInterpreter';
-import * as Reference from './Reference';
 
 type KeyCommandsArgs = IdeState & { eventDispatch: EventDispatch };
 

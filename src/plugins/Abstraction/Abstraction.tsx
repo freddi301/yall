@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Argument } from './Argument';
-import { Ast, AstComponent, AstComponentView, onEventNop } from './AstInterpreter';
+import { Ast, AstComponent, AstComponentView, onEventNop } from '../../components/AstInterpreter';
+import { Argument } from '../Argument/Argument';
 
 export const kind = 'abstraction';
 

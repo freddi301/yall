@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AstComponent, AstComponentView, onEventNop } from './AstInterpreter';
+import { AstComponent, AstComponentView, onEventNop } from '../../components/AstInterpreter';
 
 export const kind = 'argument';
 

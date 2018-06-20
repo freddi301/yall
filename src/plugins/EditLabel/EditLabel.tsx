@@ -1,9 +1,9 @@
 import * as _ from 'lodash';
 import * as React from 'react';
-import * as Argument from '../components/Argument';
-import * as Reference from '../components/Reference';
-import { Ast, AstComponent, AstPath } from './AstInterpreter';
-import { Input } from './Input';
+import { Ast, AstComponent, AstPath } from '../../components/AstInterpreter';
+import { Input } from '../../components/Input';
+import * as Argument from '../Argument/Argument';
+import * as Reference from '../Reference/Reference';
 
 export const render = ({ selected }: { selected: AstPath }): AstComponent<Ast> => ({ ast, path, eventDispatch, children }) => {
   if (_.isEqual(selected, path)) {

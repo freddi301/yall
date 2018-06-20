@@ -1,10 +1,10 @@
-import * as Abstraction from '../components/Abstraction';
-import * as Application from '../components/Application';
-import * as Argument from '../components/Argument';
 import { AstInterpreter } from '../components/AstInterpreter';
-import * as EditLabel from '../components/EditLabel';
-import * as Highlight from '../components/Highlight';
-import * as Reference from '../components/Reference';
+import * as Abstraction from '../plugins/Abstraction/Abstraction';
+import * as Application from '../plugins/Application/Application';
+import * as Argument from '../plugins/Argument/Argument';
+import * as EditLabel from '../plugins/EditLabel/EditLabel';
+import * as Highlight from '../plugins/HighLight/Highlight';
+import * as Reference from '../plugins/Reference/Reference';
 import { IdeState } from './state';
 
 export const astView = ({ selected }: IdeState) =>
