@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { IdeControl } from '../Ide';
+import { IdeContext } from '../Ide';
 import { IdeState } from '../state';
 
 export type VisualCommand = {
   isActive(ideState: IdeState): boolean;
-  render(control: IdeControl): React.ReactNode;
+  render(context: IdeContext): React.ReactNode;
 };
