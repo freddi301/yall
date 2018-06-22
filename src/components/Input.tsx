@@ -15,13 +15,13 @@ export class Input extends React.Component<{ value: string; onChange?: (value: s
   private onKeyPress = (e: React.KeyboardEvent<HTMLElement>) => {
     if (e.key === 'Enter' && this.props.onChange) {
       this.props.onChange(this.state.text);
-      this.input.blur(); // TODO: fix
+      this.input.blur();
     }
     e.stopPropagation();
   };
   private input: HTMLInputElement;
   public componentDidMount() {
-    // this.input.focus(); // TODO: fix
+    this.input.focus();
   }
   private setInputReference = (input: HTMLInputElement) => (this.input = input);
   public render() {
@@ -32,7 +32,7 @@ export class Input extends React.Component<{ value: string; onChange?: (value: s
         value={text}
         onChange={this.onChange}
         onKeyPress={this.onKeyPress}
-        style={{ width: `${text.length}ch` }}
+        style={{ width: `${text.length || 1}ch` }}
         innerRef={this.setInputReference}
       />
     );

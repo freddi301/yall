@@ -2,14 +2,14 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { Key } from '../../components/Key';
 import { KeyboardCommand } from '../../Ide/KeyboardCommands/KeyboardCommand';
-import { kind as abstractionKind } from '../Abstraction/Abstraction';
-import { kind as referenceKind, ref } from '../Reference/Reference';
-import { app, kind as applicationKind } from './Application';
+import { AbstractionKind } from '../Abstraction/Abstraction';
+import { ref, ReferenceKind } from '../Reference/Reference';
+import { app, ApplicationKind } from './Application';
 
 export const ApplicationKeyboardCommand: KeyboardCommand = {
   isActive({ selected, ast }) {
     const selectedAst = _.get(ast, selected, ast);
-    return [referenceKind, applicationKind, abstractionKind].includes(selectedAst.kind);
+    return [ReferenceKind, ApplicationKind, AbstractionKind].includes(selectedAst.kind);
   },
   matchKeys({ key }) {
     return key === ' ';
@@ -21,9 +21,8 @@ export const ApplicationKeyboardCommand: KeyboardCommand = {
       </div>
     );
   },
-  action({ state, dispatch, actions: { replace } }) {
-    const { selected, ast } = state;
+  action({ state: { selected, ast }, dispatch, actions: { replace, select } }) {
     const selectedAst = _.get(ast, selected, ast);
-    dispatch([replace({ path: selected, ast: app(selectedAst, ref('_')) })]);
+    dispatch([replace({ path: selected, ast: app(selectedAst, ref('')) }), select({ path: selected.concat('right') })]);
   }
 };

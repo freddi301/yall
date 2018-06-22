@@ -1,5 +1,6 @@
 import * as _ from 'lodash';
-import { Ast, AstPath } from '../Ide/AstView/AstInterpreter';
+import { Ast } from '../core/Ast';
+import { AstPath } from '../core/Path';
 import { identity, Lens, properties, set } from '../util/lens';
 import { actionsOf, reducerOf } from '../util/reduxLike';
 import { IdeState } from './state';

@@ -4,7 +4,7 @@ import { Key } from '../../components/Key';
 import { KeyboardCommand } from '../../Ide/KeyboardCommands/KeyboardCommand';
 import { kind as abstractionKind } from '../Abstraction/Abstraction';
 import { kind as applicationKind } from '../Application/Application';
-import { kind as referenceKind, ref } from '../Reference/Reference';
+import { ref, ReferenceKind as referenceKind } from '../Reference/Reference';
 
 export const ReferenceKeyboardCommand: KeyboardCommand = {
   isActive({ selected, ast }) {
@@ -23,6 +23,6 @@ export const ReferenceKeyboardCommand: KeyboardCommand = {
   },
   action({ state, dispatch, actions: { replace } }) {
     const { selected } = state;
-    dispatch([replace({ path: selected, ast: ref('_') })]);
+    dispatch([replace({ path: selected, ast: ref('') })]);
   }
 };

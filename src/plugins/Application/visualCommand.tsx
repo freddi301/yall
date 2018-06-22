@@ -8,6 +8,6 @@ export const ApplicationVisualCommand: VisualCommand = {
     return true;
   },
   render: ({ state: { selected }, dispatch, actions: { replace } }) => (
-    <button onClick={() => dispatch([replace({ path: selected, ast: app(ref('_'), ref('_')) })])}>application</button>
+    <button onClick={() => dispatch([replace({ path: selected, ast: app(ref(''), ref('')) })])}>application</button>
   )
 };
