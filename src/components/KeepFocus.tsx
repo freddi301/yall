@@ -1,9 +1,9 @@
 import * as React from 'react';
 
-export class KeepFocus extends React.Component<{}, {}> {
+export class KeepFocus extends React.Component<{} & React.HTMLAttributes<HTMLDivElement>, {}> {
   public render() {
     return (
-      <div tabIndex={0} ref={this.setElement}>
+      <div tabIndex={0} ref={this.setElement} {...this.props}>
         {this.props.children}
       </div>
     );

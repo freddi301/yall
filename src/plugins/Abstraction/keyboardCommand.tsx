@@ -1,8 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
+import { Key } from '../../components/Key';
 import { KeyboardCommand } from '../../Ide/KeyboardCommands/KeyboardCommand';
-import { Key } from '../../Ide/KeyboardCommands/KeyboardCommands';
-import { actions, reducer } from '../../Ide/state';
 import { arg } from '../Argument/Argument';
 import { kind, ref } from '../Reference/Reference';
 import { abs } from './Abstraction';
@@ -22,8 +21,8 @@ export const AbstractionKeyboardCommand: KeyboardCommand = {
       </div>
     );
   },
-  action({ state, update }) {
+  action({ state, dispatch, actions: { replace } }) {
     const { selected, ast } = state;
-    update(reducer(state, actions.replace({ path: selected, ast: abs(arg(_.get(ast, selected, ast).name), ref('_')) })));
+    dispatch([replace({ path: selected, ast: abs(arg(_.get(ast, selected, ast).name), ref('_')) })]);
   }
 };
