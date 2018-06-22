@@ -3,3 +3,15 @@ body {
   padding: 0;
   font-family: monospace;
 }
+
+.react-resizable-handle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.react-resizable-handle::after {
+  content: '/';
+  cursor: se-resize;
+  color: #f1f1f1;
+}

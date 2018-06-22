@@ -11,7 +11,7 @@ export const EditLabelComponentMiddleware: AstComponentMiddleware<Ast> = ({ ast,
   <IdeContext.Consumer>
     {({ state: { selected }, dispatch, actions: { replace } }) => {
       if (_.isEqual(selected, path)) {
-        if (ast.kind === Reference.kind) {
+        if (ast.kind === Reference.ReferenceKind) {
           const reference: Reference.Reference = ast as Reference.Reference;
           const onChange = (name: string) => dispatch([replace({ path, ast: { ...reference, name } })]);
           return <Input value={reference.name} onChange={onChange} />;

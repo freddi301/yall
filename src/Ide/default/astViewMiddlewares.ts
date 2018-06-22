@@ -8,14 +8,18 @@ import { ReferenceContainer } from '../../plugins/Reference/ReferenceContainer';
 import { AstViewComponent } from '../AstView/AstViewComponent';
 import { AstComponentMiddleware } from '../AstView/AstViewMiddleware';
 import { AstViewSelectorFactory } from '../AstView/AstViewSelector';
+import { ReferenceKind } from '../../plugins/Reference/Reference';
+import { ApplicationKind } from '../../plugins/Application/Application';
+import { AbstractionKind } from '../../plugins/Abstraction/Abstraction';
+import { ArgumentKind } from '../../plugins/Argument/Argument';
 
 export const defaultAstViewMiddlewares: Array<AstComponentMiddleware<Ast>> = [
   AstViewSelectorFactory({
     components: new Map([
-      ['reference', ReferenceContainer as AstViewComponent<Ast>],
-      ['application', ApplicationContainer as AstViewComponent<Ast>],
-      ['abstraction', AbstractionContainer as AstViewComponent<Ast>],
-      ['argument', ArgumentContainer as AstViewComponent<Ast>]
+      [ReferenceKind, ReferenceContainer as AstViewComponent<Ast>],
+      [ApplicationKind, ApplicationContainer as AstViewComponent<Ast>],
+      [AbstractionKind, AbstractionContainer as AstViewComponent<Ast>],
+      [ArgumentKind, ArgumentContainer as AstViewComponent<Ast>]
     ])
   }),
   EditLabelComponentMiddleware,
