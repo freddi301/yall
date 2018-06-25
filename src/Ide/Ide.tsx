@@ -1,7 +1,10 @@
 import * as React from 'react';
-import { Grid, Widget } from '../components/Grid';
 import { ObservableView } from '../components/ObservableView';
+import { Grid } from '../Gui/Grid';
+import { Widget } from '../Gui/Widget';
 import { VisualCommands } from '../Ide/VisualCommands/VisualCommands';
+import { Export } from '../plugins/ImportExport/Export';
+import { Import } from '../plugins/ImportExport/Import';
 import { AstViewFactory } from './AstView/AstView';
 import { defaultAstViewMiddlewares } from './default/astViewMiddlewares';
 import { defaultKeyboardCommands } from './default/keyboardCommands';
@@ -10,7 +13,7 @@ import { KeyboardCommands, KeyboardCommandsSuggestions } from './KeyboardCommand
 import { PathComponent } from './PathComponent';
 import { actions, IdeState, reducer } from './state';
 
-export type IdeContext = { state: IdeState; dispatch: (actions: any[] /*fix type*/) => Promise<void>; actions: typeof actions };
+export type IdeContext = { state: IdeState; dispatch: (actions: any[] /* TODO: fix type*/) => Promise<void>; actions: typeof actions };
 
 export const IdeContext = React.createContext<IdeContext>({
   state: { selected: [], ast: { kind: 'empty' } },
@@ -28,6 +31,10 @@ export const Ide: ObservableView<IdeState> = ({ value: state, update }) => {
   return (
     <IdeContext.Provider value={context}>
       <Grid>
+        <Widget key="Extra" heading="Extra" data-grid={{ x: 10, y: 0, w: 2, h: 5 }}>
+          <Export />
+          <Import />
+        </Widget>
         <Widget
           key="AstView"
           heading={
@@ -35,16 +42,16 @@ export const Ide: ObservableView<IdeState> = ({ value: state, update }) => {
               Ast View <PathComponent path={selected} onSelect={({ path }) => context.dispatch([context.actions.select({ path })])} />
             </span>
           }
-          data-grid={{ w: 4, x: 0, y: 0, h: 1 }}
+          data-grid={{ w: 8, x: 0, y: 0, h: 5 }}
         >
           <KeyboardCommands keyboardCommands={defaultKeyboardCommands}>
             <AstView ast={ast} path={[]} />
           </KeyboardCommands>
         </Widget>
-        <Widget key="KeyboardCommandsSuggestions" heading="Keyboard Commands Suggestions" data-grid={{ w: 1, x: 4, y: 0, h: 1 }}>
+        <Widget key="KeyboardCommandsSuggestions" heading="Keyboard Commands Suggestions" data-grid={{ w: 2, x: 8, y: 0, h: 2 }}>
           <KeyboardCommandsSuggestions keyboardCommands={defaultKeyboardCommands} />
         </Widget>
-        <Widget key="VisualCommands" heading="Visual Commands" data-grid={{ w: 1, x: 5, y: 0, h: 1 }}>
+        <Widget key="VisualCommands" heading="Visual Commands" data-grid={{ w: 2, x: 8, y: 2, h: 3 }}>
           <VisualCommands visualCommands={defaultVisualCommands} />
         </Widget>
       </Grid>
