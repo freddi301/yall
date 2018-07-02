@@ -1,7 +1,7 @@
-import * as React from 'react';
-import styled from 'styled-components';
+import * as React from "react";
+import styled from "styled-components";
 
-const WidgetWrapper = styled.div`
+const CellWrapper = styled.div`
   border: 1px solid #f1f1f1;
   border-radius: 4px;
   padding: 4px;
@@ -14,9 +14,9 @@ const Heading = styled.div`
   cursor: move;
 `;
 
-export const Widget: React.ComponentType<{ heading?: React.ReactNode; children: React.ReactNode }> = props => (
-  <WidgetWrapper {...props}>
+export const Cell: React.ComponentType<{ heading?: React.ReactNode; children: React.ReactNode }> = props => (
+  <CellWrapper {...props}>
     {props.heading ? <Heading>{props.heading}</Heading> : null}
     <div>{props.children}</div>
-  </WidgetWrapper>
+  </CellWrapper>
 );

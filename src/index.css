@@ -4,14 +4,11 @@ body {
   font-family: monospace;
 }
 
-.react-resizable-handle {
-  position: absolute;
-  bottom: 0;
-  right: 0;
+html,
+body {
+  height: 100%;
 }
 
-.react-resizable-handle::after {
-  content: '/';
-  cursor: se-resize;
-  color: #f1f1f1;
+#root {
+  height: 100%;
 }

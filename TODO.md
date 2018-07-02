@@ -2,6 +2,7 @@
 
 * scratchpad copy paste
 * namespace ast
+* fuzzy search
 * command panel
 * save ide setup
 * refactor components to modules

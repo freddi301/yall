@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { AstPath } from '../core/Path';
+import * as React from "react";
+import { AstPath } from "../core/Path";
 
 export const PathComponent = ({ path, onSelect }: { path: AstPath; onSelect: (args: { path: AstPath }) => void }) => (
   <span>
