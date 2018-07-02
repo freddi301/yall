@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { KeepFocus } from '../../components/KeepFocus';
-import { IdeContext } from '../Ide';
+import { IdeContext } from '../../Ide/Ide';
 import { KeyboardCommand } from './KeyboardCommand';
 
 export const KeyboardCommandsSuggestions: React.StatelessComponent<{ keyboardCommands: KeyboardCommand[] }> = ({ keyboardCommands }) => (

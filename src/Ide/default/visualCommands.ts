@@ -1,6 +1,6 @@
-import { AbstractionVisualCommand } from '../../plugins/Abstraction/visualCommand';
-import { ApplicationVisualCommand } from '../../plugins/Application/visualCommand';
-import { ReferenceVisualCommand } from '../../plugins/Reference/visualCommand';
-import { VisualCommand } from '../VisualCommands/VisualCommand';
+import { AbstractionVisualCommand } from '../../modules/Abstraction/visualCommand';
+import { ApplicationVisualCommand } from '../../modules/Application/visualCommand';
+import { ReferenceVisualCommand } from '../../modules/Reference/visualCommand';
+import { VisualCommand } from '../../modules/VisualCommands/VisualCommand';
 
 export const defaultVisualCommands: VisualCommand[] = [AbstractionVisualCommand, ApplicationVisualCommand, ReferenceVisualCommand];

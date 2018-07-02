@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { VisualCommand } from '../../Ide/VisualCommands/VisualCommand';
 import { arg } from '../Argument/Argument';
 import { ref } from '../Reference/Reference';
+import { VisualCommand } from '../VisualCommands/VisualCommand';
 import { abs } from './Abstraction';
 
 export const AbstractionVisualCommand: VisualCommand = {

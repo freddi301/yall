@@ -1,17 +1,17 @@
 import { Ast } from '../../core/Ast';
-import { AbstractionContainer } from '../../plugins/Abstraction/AbstractionContainer';
-import { ApplicationContainer } from '../../plugins/Application/ApplicationContainer';
-import { ArgumentContainer } from '../../plugins/Argument/ArgumentContainer';
-import { EditLabelComponentMiddleware } from '../../plugins/EditLabel/EditLabel';
-import { HighlightComponentMiddleware } from '../../plugins/HighLight/HighlightComponentMiddleware';
-import { ReferenceContainer } from '../../plugins/Reference/ReferenceContainer';
-import { AstViewComponent } from '../AstView/AstViewComponent';
-import { AstComponentMiddleware } from '../AstView/AstViewMiddleware';
-import { AstViewSelectorFactory } from '../AstView/AstViewSelector';
-import { ReferenceKind } from '../../plugins/Reference/Reference';
-import { ApplicationKind } from '../../plugins/Application/Application';
-import { AbstractionKind } from '../../plugins/Abstraction/Abstraction';
-import { ArgumentKind } from '../../plugins/Argument/Argument';
+import { AbstractionKind } from '../../modules/Abstraction/Abstraction';
+import { AbstractionContainer } from '../../modules/Abstraction/AbstractionContainer';
+import { ApplicationKind } from '../../modules/Application/Application';
+import { ApplicationContainer } from '../../modules/Application/ApplicationContainer';
+import { ArgumentKind } from '../../modules/Argument/Argument';
+import { ArgumentContainer } from '../../modules/Argument/ArgumentContainer';
+import { AstViewComponent } from '../../modules/AstView/AstViewComponent';
+import { AstComponentMiddleware } from '../../modules/AstView/AstViewMiddleware';
+import { AstViewSelectorFactory } from '../../modules/AstView/AstViewSelector';
+import { EditLabelComponentMiddleware } from '../../modules/EditLabel/EditLabel';
+import { HighlightComponentMiddleware } from '../../modules/HighLight/HighlightComponentMiddleware';
+import { ReferenceKind } from '../../modules/Reference/Reference';
+import { ReferenceContainer } from '../../modules/Reference/ReferenceContainer';
 
 export const defaultAstViewMiddlewares: Array<AstComponentMiddleware<Ast>> = [
   AstViewSelectorFactory({

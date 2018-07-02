@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AstPath } from '../../core/Path';
-import { AstViewContext } from '../../Ide/AstView/AstView';
 import { IdeContext } from '../../Ide/Ide';
+import { AstViewContext } from '../AstView/AstView';
 import { Abstraction } from './Abstraction';
 import { AbstractionComponent } from './AbstractionComponent';
 

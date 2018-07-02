@@ -4,7 +4,7 @@
 * namespace ast
 * command panel
 * save ide setup
-* refactor components in Ide directory to plugins
+* refactor components to modules
 * add interpreter
 * add debugger
 * code-mods as primitives (visual commands)

@@ -1,7 +1,7 @@
-import { AbstractionKeyboardCommand } from '../../plugins/Abstraction/keyboardCommand';
-import { ApplicationKeyboardCommand } from '../../plugins/Application/keyboardCommand';
-import { ReferenceKeyboardCommand } from '../../plugins/Reference/keyboardCommand';
-import { KeyboardCommand } from '../KeyboardCommands/KeyboardCommand';
+import { AbstractionKeyboardCommand } from '../../modules/Abstraction/keyboardCommand';
+import { ApplicationKeyboardCommand } from '../../modules/Application/keyboardCommand';
+import { KeyboardCommand } from '../../modules/KeyboardCommands/KeyboardCommand';
+import { ReferenceKeyboardCommand } from '../../modules/Reference/keyboardCommand';
 
 export const defaultKeyboardCommands: KeyboardCommand[] = [
   AbstractionKeyboardCommand,

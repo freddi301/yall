@@ -2,9 +2,9 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { Input } from '../../components/Input';
 import { Ast } from '../../core/Ast';
-import { AstComponentMiddleware } from '../../Ide/AstView/AstViewMiddleware';
 import { IdeContext } from '../../Ide/Ide';
 import * as Argument from '../Argument/Argument';
+import { AstComponentMiddleware } from '../AstView/AstViewMiddleware';
 import * as Reference from '../Reference/Reference';
 
 export const EditLabelComponentMiddleware: AstComponentMiddleware<Ast> = ({ ast, path, children }) => (

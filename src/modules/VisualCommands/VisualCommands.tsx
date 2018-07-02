@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IdeContext } from '../Ide';
+import { IdeContext } from '../../Ide/Ide';
 import { VisualCommand } from './VisualCommand';
 
 export const VisualCommands: React.StatelessComponent<{ visualCommands: VisualCommand[] }> = ({ visualCommands }) => {

@@ -1,8 +1,8 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 import { Key } from '../../components/Key';
-import { KeyboardCommand } from '../../Ide/KeyboardCommands/KeyboardCommand';
 import { AbstractionKind } from '../Abstraction/Abstraction';
+import { KeyboardCommand } from '../KeyboardCommands/KeyboardCommand';
 import { ref, ReferenceKind } from '../Reference/Reference';
 import { app, ApplicationKind } from './Application';
 

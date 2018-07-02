@@ -1,9 +1,9 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 import { Key } from '../../components/Key';
-import { KeyboardCommand } from '../../Ide/KeyboardCommands/KeyboardCommand';
 import { kind as abstractionKind } from '../Abstraction/Abstraction';
 import { kind as applicationKind } from '../Application/Application';
+import { KeyboardCommand } from '../KeyboardCommands/KeyboardCommand';
 import { ref, ReferenceKind as referenceKind } from '../Reference/Reference';
 
 export const ReferenceKeyboardCommand: KeyboardCommand = {

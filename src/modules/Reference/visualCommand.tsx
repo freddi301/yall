@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { VisualCommand } from '../../Ide/VisualCommands/VisualCommand';
 import { ref } from '../Reference/Reference';
+import { VisualCommand } from '../VisualCommands/VisualCommand';
 
 export const ReferenceVisualCommand: VisualCommand = {
   isActive(state) {
