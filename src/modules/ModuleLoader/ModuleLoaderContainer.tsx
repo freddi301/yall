@@ -25,12 +25,11 @@ export class ModuleLoader extends React.Component<ModuleLoaderProps, ModuleLoade
     loadModule: (moduleName: ModuleName) => this.loadModule(moduleName)
   };
   public render() {
-    const { children, initialModules } = this.props;
-    initialModules.forEach(moduleName => this.loadModule(moduleName));
+    this.ensureInitialModulesLoaded();
     const moduleExports = ModuleLoader.getModuleExports(this.state.moduleInstances);
     return (
       <ModuleLoaderContext.Provider value={this.state}>
-        <ModuleExportsContext.Provider value={moduleExports}>{children}</ModuleExportsContext.Provider>
+        <ModuleExportsContext.Provider value={moduleExports}>{this.props.children}</ModuleExportsContext.Provider>
       </ModuleLoaderContext.Provider>
     );
   }
@@ -61,5 +60,10 @@ export class ModuleLoader extends React.Component<ModuleLoaderProps, ModuleLoade
     const allModules = Array.from(modules.values());
     const moduleExports = flatten(allModules.map(mod => mod.default));
     return moduleExports;
+  }
+  private async ensureInitialModulesLoaded() {
+    const { initialModules } = this.props;
+    await Promise.resolve();
+    initialModules.forEach(moduleName => this.loadModule(moduleName));
   }
 }
