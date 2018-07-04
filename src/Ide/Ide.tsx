@@ -12,6 +12,7 @@ import { VisualCommand } from "../modules/VisualCommands/VisualCommand";
 import { VisualCommands } from "../modules/VisualCommands/VisualCommands";
 import { defaultAstViewMiddlewares } from "./default/astViewMiddlewares";
 import { defaultKeyboardCommands } from "./default/keyboardCommands";
+import { defaultLoadedModules } from "./default/loadedModules";
 import { PathComponent } from "./PathComponent";
 import { actions, IdeState, reducer } from "./state";
 
@@ -26,7 +27,7 @@ export const Ide: ObservableView<IdeState> = ({ value: state, update }) => {
   const context: IdeContext = { state, actions, dispatch: acts => update(acts.reduce(reducer, state)) };
   return (
     <IdeContext.Provider value={context}>
-      <ModuleLoader initialModules={[]}>
+      <ModuleLoader initialModules={defaultLoadedModules}>
         <Grid>
           <Cell key="Extra" heading="Extra">
             <Export />

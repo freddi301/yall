@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { IdeContext } from '../../Ide/Ide';
-import { IdeState } from '../../Ide/state';
+import * as React from "react";
+import { IdeContext } from "../../Ide/Ide";
+import { IdeState } from "../../Ide/state";
 
 export type KeyboardCommand = {
   isActive(ideState: IdeState): boolean;
