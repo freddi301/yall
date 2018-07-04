@@ -1,3 +1,4 @@
+import { flatten } from "lodash";
 import * as React from "react";
 
 type ModuleName = string;
@@ -57,6 +58,8 @@ export class ModuleLoader extends React.Component<ModuleLoaderProps, ModuleLoade
     return moduleInstances.get(moduleName) || moduleLoading.get(moduleName);
   }
   private static getModuleExports(modules: Map<ModuleName, ModuleShape>): ModuleExport[] {
-    return Array.from(modules.values()).map(mod => mod.default);
+    const allModules = Array.from(modules.values());
+    const moduleExports = flatten(allModules.map(mod => mod.default));
+    return moduleExports;
   }
 }
