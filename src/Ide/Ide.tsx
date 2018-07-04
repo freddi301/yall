@@ -5,13 +5,13 @@ import { Cell } from "../modules/Gui/Cell";
 import { Grid } from "../modules/Gui/Grid";
 import { Export } from "../modules/ImportExport/Export";
 import { Import } from "../modules/ImportExport/Import";
-import { KeyboardCommands, KeyboardCommandsSuggestions } from "../modules/KeyboardCommands/KeyboardCommands";
+import { KeyboardCommand } from "../modules/KeyboardCommands/KeyboardCommand";
+import { KeyboardCommandsCapture, KeyboardCommandsSuggestions } from "../modules/KeyboardCommands/KeyboardCommands";
 import { ModuleLoaderComponent } from "../modules/ModuleLoader/ModuleLoaderComponent";
 import { ModuleExportsContext, ModuleLoader } from "../modules/ModuleLoader/ModuleLoaderContainer";
 import { VisualCommand } from "../modules/VisualCommands/VisualCommand";
 import { VisualCommands } from "../modules/VisualCommands/VisualCommands";
 import { defaultAstViewMiddlewares } from "./default/astViewMiddlewares";
-import { defaultKeyboardCommands } from "./default/keyboardCommands";
 import { defaultLoadedModules } from "./default/loadedModules";
 import { PathComponent } from "./PathComponent";
 import { actions, IdeState, reducer } from "./state";
@@ -42,12 +42,24 @@ export const Ide: ObservableView<IdeState> = ({ value: state, update }) => {
               </span>
             }
           >
-            <KeyboardCommands keyboardCommands={defaultKeyboardCommands}>
-              <AstView ast={ast} path={[]} />
-            </KeyboardCommands>
+            <ModuleExportsContext.Consumer>
+              {moduleExports => {
+                const keyboardCommands = moduleExports.filter(item => item instanceof KeyboardCommand);
+                return (
+                  <KeyboardCommandsCapture keyboardCommands={keyboardCommands}>
+                    <AstView ast={ast} path={[]} />
+                  </KeyboardCommandsCapture>
+                );
+              }}
+            </ModuleExportsContext.Consumer>
           </Cell>
           <Cell key="KeyboardCommandsSuggestions" heading="Keyboard Commands Suggestions">
-            <KeyboardCommandsSuggestions keyboardCommands={defaultKeyboardCommands} />
+            <ModuleExportsContext.Consumer>
+              {moduleExports => {
+                const keyboardCommands = moduleExports.filter(item => item instanceof KeyboardCommand);
+                return <KeyboardCommandsSuggestions keyboardCommands={keyboardCommands} />;
+              }}
+            </ModuleExportsContext.Consumer>
           </Cell>
           <Cell key="VisualCommands" heading="Visual Commands">
             <ModuleExportsContext.Consumer>

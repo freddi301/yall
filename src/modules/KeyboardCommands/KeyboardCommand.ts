@@ -2,9 +2,9 @@ import * as React from "react";
 import { IdeContext } from "../../Ide/Ide";
 import { IdeState } from "../../Ide/state";
 
-export type KeyboardCommand = {
-  isActive(ideState: IdeState): boolean;
-  render(ideContext: IdeState): React.ReactNode;
-  matchKeys(event: React.KeyboardEvent<HTMLElement>): boolean;
-  action(context: IdeContext): void;
-};
+export abstract class KeyboardCommand {
+  public abstract isActive(ideState: IdeState): boolean;
+  public abstract render(ideContext: IdeState): React.ReactNode;
+  public abstract matchKeys(event: React.KeyboardEvent<HTMLElement>): boolean;
+  public abstract action(context: IdeContext): void;
+}

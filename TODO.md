@@ -1,5 +1,9 @@
 # TODO
 
+* better grid layout
+* refactor keyboard commands to take key description and disambiguate equals
+* add **before**/**after** in commands description
+* refactor: reduce visibility/responsabilities of components
 * scratchpad copy paste
 * namespace ast
 * fuzzy search
@@ -10,7 +14,6 @@
 * add debugger
 * code-mods as primitives (visual commands)
 * assignable shortcuts
-* better grid layout
 * auto-install missing plugins
 * enable/disable plugins
 

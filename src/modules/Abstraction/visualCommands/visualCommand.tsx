@@ -11,6 +11,6 @@ export class InsertInPlaceAbstractionVisualCommand extends VisualCommand {
     return true;
   }
   public render({ state: { selected }, dispatch, actions: { replace } }: IdeContext) {
-    return <button onClick={() => dispatch([replace({ path: selected, ast: abs(arg("_"), ref("_")) })])}>abstraction</button>;
+    return <button onClick={() => dispatch([replace({ path: selected, ast: abs(arg(""), ref("")) })])}>abstraction</button>;
   }
 }
