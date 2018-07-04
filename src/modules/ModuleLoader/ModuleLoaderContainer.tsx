@@ -1,37 +1,62 @@
 import * as React from "react";
 
-type Module = { default?: any[]; description?: React.ReactNode };
-
-type ModuleLoaderState = {
-  moduleLoading: Map<string, Promise<Module>>;
-  moduleInstances: Map<string, Module>;
-  moduleError: Map<string, Error>;
-  loadModule(moduleName: string): Promise<Module>;
-};
+type ModuleName = string;
+type ModuleShape = { default: ModuleExport[]; description: React.ReactNode };
+type ModuleExport = any;
 
 export const ModuleLoaderContext = React.createContext<ModuleLoaderState>(null as any);
+export const ModuleExportsContext = React.createContext<ModuleExport[]>(null as any);
 
-export class ModuleLoader extends React.Component<{}, { moduleName: string } & ModuleLoaderState, {}> {
+type ModuleLoaderState = {
+  moduleLoading: Map<ModuleName, Promise<ModuleShape>>;
+  moduleInstances: Map<ModuleName, ModuleShape>;
+  moduleError: Map<ModuleName, Error>;
+  loadModule(moduleName: ModuleName): Promise<ModuleShape>;
+};
+
+type ModuleLoaderProps = { initialModules: ModuleName[] };
+
+export class ModuleLoader extends React.Component<ModuleLoaderProps, ModuleLoaderState, {}> {
   public state = {
-    moduleName: "",
     moduleLoading: new Map(),
     moduleInstances: new Map(),
     moduleError: new Map(),
-    loadModule: (moduleName: string) => this.loadModule(moduleName)
+    loadModule: (moduleName: ModuleName) => this.loadModule(moduleName)
   };
   public render() {
-    return <ModuleLoaderContext.Provider value={this.state}>{this.props.children}</ModuleLoaderContext.Provider>;
+    const { children, initialModules } = this.props;
+    initialModules.forEach(moduleName => this.loadModule(moduleName));
+    const moduleExports = ModuleLoader.getModuleExports(this.state.moduleInstances);
+    return (
+      <ModuleLoaderContext.Provider value={this.state}>
+        <ModuleExportsContext.Provider value={moduleExports}>{children}</ModuleExportsContext.Provider>
+      </ModuleLoaderContext.Provider>
+    );
   }
-  private async loadModule(moduleName: string): Promise<any> {
+  private async loadModule(moduleName: ModuleName): Promise<ModuleShape> {
+    if (this.isAlreadyLoaded(moduleName)) {
+      return this.getExistingModule(moduleName);
+    }
     const modulePromise = import("../" + moduleName);
-    this.setState({ moduleLoading: new Map(this.state.moduleLoading).set(moduleName, modulePromise) });
+    this.setState(({ moduleLoading }) => ({ moduleLoading: new Map(moduleLoading).set(moduleName, modulePromise) }));
     try {
       const moduleInstance = await modulePromise;
-      this.setState({ moduleInstances: new Map(this.state.moduleInstances).set(moduleName, moduleInstance) });
+      this.setState(({ moduleInstances }) => ({ moduleInstances: new Map(moduleInstances).set(moduleName, moduleInstance) }));
       return moduleInstance;
     } catch (error) {
-      this.setState({ moduleError: new Map(this.state.moduleError).set(moduleName, error) });
+      this.setState(({ moduleError }) => ({ moduleError: new Map(moduleError).set(moduleName, error) }));
       throw error;
     }
+  }
+  private isAlreadyLoaded(moduleName: ModuleName): boolean {
+    const { moduleInstances, moduleLoading } = this.state;
+    return moduleInstances.has(moduleName) || moduleLoading.has(moduleName);
+  }
+  private async getExistingModule(moduleName: ModuleName): Promise<ModuleShape> {
+    const { moduleInstances, moduleLoading } = this.state;
+    return moduleInstances.get(moduleName) || moduleLoading.get(moduleName);
+  }
+  private static getModuleExports(modules: Map<ModuleName, ModuleShape>): ModuleExport[] {
+    return Array.from(modules.values()).map(mod => mod.default);
   }
 }

@@ -11,7 +11,6 @@ const Heading = styled.div`
   border-bottom: 1px solid #f1f1f1;
   margin-bottom: 4px;
   user-select: none;
-  cursor: move;
 `;
 
 export const Cell: React.ComponentType<{ heading?: React.ReactNode; children: React.ReactNode }> = props => (

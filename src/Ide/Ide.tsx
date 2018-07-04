@@ -7,7 +7,7 @@ import { Export } from "../modules/ImportExport/Export";
 import { Import } from "../modules/ImportExport/Import";
 import { KeyboardCommands, KeyboardCommandsSuggestions } from "../modules/KeyboardCommands/KeyboardCommands";
 import { ModuleLoaderComponent } from "../modules/ModuleLoader/ModuleLoaderComponent";
-import { ModuleLoader, ModuleLoaderContext } from "../modules/ModuleLoader/ModuleLoaderContainer";
+import { ModuleExportsContext, ModuleLoader } from "../modules/ModuleLoader/ModuleLoaderContainer";
 import { VisualCommand } from "../modules/VisualCommands/VisualCommand";
 import { VisualCommands } from "../modules/VisualCommands/VisualCommands";
 import { defaultAstViewMiddlewares } from "./default/astViewMiddlewares";
@@ -26,7 +26,7 @@ export const Ide: ObservableView<IdeState> = ({ value: state, update }) => {
   const context: IdeContext = { state, actions, dispatch: acts => update(acts.reduce(reducer, state)) };
   return (
     <IdeContext.Provider value={context}>
-      <ModuleLoader>
+      <ModuleLoader initialModules={[]}>
         <Grid>
           <Cell key="Extra" heading="Extra">
             <Export />
@@ -40,7 +40,6 @@ export const Ide: ObservableView<IdeState> = ({ value: state, update }) => {
                 Ast View <PathComponent path={selected} onSelect={({ path }) => context.dispatch([context.actions.select({ path })])} />
               </span>
             }
-            data-grid={{ w: 8, x: 0, y: 0, h: 5 }}
           >
             <KeyboardCommands keyboardCommands={defaultKeyboardCommands}>
               <AstView ast={ast} path={[]} />
@@ -50,21 +49,12 @@ export const Ide: ObservableView<IdeState> = ({ value: state, update }) => {
             <KeyboardCommandsSuggestions keyboardCommands={defaultKeyboardCommands} />
           </Cell>
           <Cell key="VisualCommands" heading="Visual Commands">
-            <ModuleLoaderContext.Consumer>
-              {modules => {
-                const visualCommands: VisualCommand[] = [];
-                for (const mod of modules.moduleInstances.values()) {
-                  if (mod.default) {
-                    mod.default.forEach(item => {
-                      if (item instanceof VisualCommand) {
-                        visualCommands.push(item);
-                      }
-                    });
-                  }
-                }
+            <ModuleExportsContext.Consumer>
+              {moduleExports => {
+                const visualCommands = moduleExports.filter(item => item instanceof VisualCommand);
                 return <VisualCommands visualCommands={visualCommands} />;
               }}
-            </ModuleLoaderContext.Consumer>
+            </ModuleExportsContext.Consumer>
           </Cell>
         </Grid>
       </ModuleLoader>
