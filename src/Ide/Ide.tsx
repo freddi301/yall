@@ -28,31 +28,26 @@ export const Ide: ObservableView<AstViewState> = ({ value: state, update }) => {
     <IdeContext.Provider value={context}>
       <ModuleLoader initialModules={["Reference", "Application", "Abstraction"]}>
         <Grid>
-          <Cell key="Extra" heading="Extra">
+          <Cell key="Extra">
             <Export />
             <Import />
             <ModuleLoaderComponent />
           </Cell>
-          <Cell
-            key="AstView"
-            heading={
-              <span>
-                Ast View <PathComponent path={selected} onSelect={({ path }) => context.dispatch([context.actions.select({ path })])} />
-              </span>
-            }
-          >
+          <Cell key="AstView">
             <ModuleExportsContext.Consumer>
               {moduleExports => {
                 const keyboardCommands = moduleExports.filter(item => item instanceof KeyboardCommand);
                 return (
                   <KeyboardCommandsCapture keyboardCommands={keyboardCommands}>
+                    <PathComponent path={selected} onSelect={({ path }) => context.dispatch([context.actions.select({ path })])} />
+                    <br />
                     <AstView ast={ast} path={[]} />
                   </KeyboardCommandsCapture>
                 );
               }}
             </ModuleExportsContext.Consumer>
           </Cell>
-          <Cell key="KeyboardCommandsSuggestions" heading="Keyboard Commands Suggestions">
+          <Cell key="KeyboardCommandsSuggestions">
             <ModuleExportsContext.Consumer>
               {moduleExports => {
                 const keyboardCommands = moduleExports.filter(item => item instanceof KeyboardCommand);
@@ -60,7 +55,7 @@ export const Ide: ObservableView<AstViewState> = ({ value: state, update }) => {
               }}
             </ModuleExportsContext.Consumer>
           </Cell>
-          <Cell key="VisualCommands" heading="Visual Commands">
+          <Cell key="VisualCommands">
             <ModuleExportsContext.Consumer>
               {moduleExports => {
                 const visualCommands = moduleExports.filter(item => item instanceof VisualCommand);
@@ -68,6 +63,7 @@ export const Ide: ObservableView<AstViewState> = ({ value: state, update }) => {
               }}
             </ModuleExportsContext.Consumer>
           </Cell>
+          <Cell />
         </Grid>
       </ModuleLoader>
     </IdeContext.Provider>
