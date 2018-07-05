@@ -1,7 +1,7 @@
 # TODO
 
 * better grid layout
-* refactor keyboard commands to take key description and disambiguate equals
+* disambiguate keys on keyboard commands
 * add **before**/**after** in commands description
 * refactor: reduce visibility/responsabilities of components
 * scratchpad copy paste

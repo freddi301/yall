@@ -1,6 +1,4 @@
 import * as _ from "lodash";
-import * as React from "react";
-import { Key } from "../../../components/Key";
 import { IdeContext } from "../../../Ide/Ide";
 import { IdeState } from "../../../Ide/state";
 import { AbstractionKind } from "../../Abstraction/Abstraction";
@@ -13,15 +11,9 @@ export class InsertIntoRightApplicationKeyboardCommand extends KeyboardCommand {
     const selectedAst = _.get(ast, selected, ast);
     return [ReferenceKind, ApplicationKind, AbstractionKind].includes(selectedAst.kind);
   }
-  public matchKeys({ key, ctrlKey }: React.KeyboardEvent<HTMLElement>) {
-    return key === " " && ctrlKey;
-  }
+  public key = { key: " ", ctrl: true, shift: false };
   public render() {
-    return (
-      <div>
-        <Key>ctrl</Key>+<Key>&nbsp;</Key> application
-      </div>
-    );
+    return "application";
   }
   public action({ state: { selected, ast }, dispatch, actions: { replace, select } }: IdeContext) {
     const selectedAst = _.get(ast, selected, ast);

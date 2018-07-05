@@ -9,6 +9,6 @@ export class InsertReferenceInPlaceReferenceVisualCommand extends VisualCommand 
     return true;
   }
   public render({ state: { selected }, dispatch, actions: { replace } }: IdeContext) {
-    return <button onClick={() => dispatch([replace({ path: selected, ast: ref("_") })])}>reference</button>;
+    return <button onClick={() => dispatch([replace({ path: selected, ast: ref("") })])}>reference</button>;
   }
 }
