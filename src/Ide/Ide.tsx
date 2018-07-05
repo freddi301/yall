@@ -1,6 +1,9 @@
 import * as React from "react";
 import { ObservableView } from "../components/ObservableView";
 import { AstViewFactory } from "../modules/AstView/AstView";
+import { defaultAstViewMiddlewares } from "../modules/AstView/astViewMiddlewares";
+import { PathComponent } from "../modules/AstView/PathComponent";
+import { actions, AstViewState, reducer } from "../modules/AstView/state";
 import { Cell } from "../modules/Gui/Cell";
 import { Grid } from "../modules/Gui/Grid";
 import { Export } from "../modules/ImportExport/Export";
@@ -11,23 +14,19 @@ import { ModuleLoaderComponent } from "../modules/ModuleLoader/ModuleLoaderCompo
 import { ModuleExportsContext, ModuleLoader } from "../modules/ModuleLoader/ModuleLoaderContainer";
 import { VisualCommand } from "../modules/VisualCommands/VisualCommand";
 import { VisualCommands } from "../modules/VisualCommands/VisualCommands";
-import { defaultAstViewMiddlewares } from "./default/astViewMiddlewares";
-import { defaultLoadedModules } from "./default/loadedModules";
-import { PathComponent } from "./PathComponent";
-import { actions, IdeState, reducer } from "./state";
 
-export type IdeContext = { state: IdeState; dispatch: (actions: any[] /* TODO: fix type*/) => Promise<void>; actions: typeof actions };
+export type IdeContext = { state: AstViewState; dispatch: (actions: any[] /* TODO: fix type*/) => Promise<void>; actions: typeof actions };
 
 export const IdeContext = React.createContext<IdeContext>(null as any); // null as any is meant to break app when no context provided
 
 const AstView = AstViewFactory({ middlewares: defaultAstViewMiddlewares });
 
-export const Ide: ObservableView<IdeState> = ({ value: state, update }) => {
+export const Ide: ObservableView<AstViewState> = ({ value: state, update }) => {
   const { ast, selected } = state;
   const context: IdeContext = { state, actions, dispatch: acts => update(acts.reduce(reducer, state)) };
   return (
     <IdeContext.Provider value={context}>
-      <ModuleLoader initialModules={defaultLoadedModules}>
+      <ModuleLoader initialModules={["Reference", "Application", "Abstraction"]}>
         <Grid>
           <Cell key="Extra" heading="Extra">
             <Export />

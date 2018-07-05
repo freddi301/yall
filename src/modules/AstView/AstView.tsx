@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { Ast } from '../../core/Ast';
-import { AstPath } from '../../core/Path';
-import { AstComponentMiddleware } from './AstViewMiddleware';
+import * as React from "react";
+import { Ast } from "../../modules/AstView/Ast";
+import { AstPath } from "../../modules/AstView/Path";
+import { AstComponentMiddleware } from "./AstViewMiddleware";
 
 export const AstViewContext: React.Context<AstComponentMiddleware<Ast>> = React.createContext(() => <></>);
 

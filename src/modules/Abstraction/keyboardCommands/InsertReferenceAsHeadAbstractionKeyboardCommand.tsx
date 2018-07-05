@@ -1,13 +1,13 @@
 import * as _ from "lodash";
 import { IdeContext } from "../../../Ide/Ide";
-import { IdeState } from "../../../Ide/state";
+import { AstViewState } from "../../../modules/AstView/state";
 import { arg } from "../../Argument/Argument";
 import { KeyboardCommand } from "../../KeyboardCommands/KeyboardCommand";
 import { ref, ReferenceKind } from "../../Reference/Reference";
 import { abs } from "../Abstraction";
 
 export class InsertReferenceAsHeadAbstractionKeyboardCommand extends KeyboardCommand {
-  public isActive({ selected, ast }: IdeState) {
+  public isActive({ selected, ast }: AstViewState) {
     const selectedAst = _.get(ast, selected, ast);
     return selectedAst.kind === ReferenceKind;
   }

@@ -1,4 +1,4 @@
-import { Ast } from "../../core/Ast";
+import { Ast } from "../../modules/AstView/Ast";
 import { Argument } from "../Argument/Argument";
 
 export const kind = "abstraction";

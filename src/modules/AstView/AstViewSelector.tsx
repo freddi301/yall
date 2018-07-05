@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { Ast } from '../../core/Ast';
-import { AstPath } from '../../core/Path';
-import { AstViewComponent } from './AstViewComponent';
-import { UnknownAst } from './UnknownAst';
+import * as React from "react";
+import { Ast } from "../../modules/AstView/Ast";
+import { AstPath } from "../../modules/AstView/Path";
+import { AstViewComponent } from "./AstViewComponent";
+import { UnknownAst } from "./UnknownAst";
 
 export const AstViewSelectorFactory = ({ components }: { components: Map<string, AstViewComponent<Ast>> }) => ({
   ast,

@@ -1,13 +1,13 @@
 import * as React from "react";
 import { IdeContext } from "../../../Ide/Ide";
-import { IdeState } from "../../../Ide/state";
+import { AstViewState } from "../../../modules/AstView/state";
 import { arg } from "../../Argument/Argument";
 import { ref } from "../../Reference/Reference";
 import { VisualCommand } from "../../VisualCommands/VisualCommand";
 import { abs } from "../Abstraction";
 
 export class InsertInPlaceAbstractionVisualCommand extends VisualCommand {
-  public isActive(state: IdeState) {
+  public isActive(state: AstViewState) {
     return true;
   }
   public render({ state: { selected }, dispatch, actions: { replace } }: IdeContext) {

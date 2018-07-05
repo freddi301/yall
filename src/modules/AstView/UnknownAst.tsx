@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { Ast } from '../../core/Ast';
-import { AstPath } from '../../core/Path';
+import * as React from "react";
+import { Ast } from "../../modules/AstView/Ast";
+import { AstPath } from "../../modules/AstView/Path";
 
 export const UnknownAst = ({ ast }: { ast: Ast; path: AstPath }) => (
   <div>

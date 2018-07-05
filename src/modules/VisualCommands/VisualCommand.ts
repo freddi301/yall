@@ -1,8 +1,8 @@
 import * as React from "react";
 import { IdeContext } from "../../Ide/Ide";
-import { IdeState } from "../../Ide/state";
+import { AstViewState } from "../../modules/AstView/state";
 
 export abstract class VisualCommand {
-  public abstract isActive(ideState: IdeState): boolean;
+  public abstract isActive(ideState: AstViewState): boolean;
   public abstract render(context: IdeContext): React.ReactNode;
 }
