@@ -2,6 +2,8 @@ import { InsertIntoRightApplicationKeyboardCommand } from "./keyboardCommands/In
 import { InsertToRightApplicationKeyboardCommand } from "./keyboardCommands/InsertToRightApplicationKeyboardCommand";
 import { InsertInPlaceApplicationVisualCommand } from "./visualCommands/visualCommand";
 
+export const description = "TODO";
+
 export default [
   new InsertInPlaceApplicationVisualCommand(),
   new InsertIntoRightApplicationKeyboardCommand(),

@@ -1,9 +1,9 @@
 import { flatten } from "lodash";
 import * as React from "react";
 
-type ModuleName = string;
-type ModuleShape = { default: ModuleExport[]; description: React.ReactNode };
-type ModuleExport = any;
+export type ModuleName = string;
+export type ModuleShape = { default: ModuleExport[]; description: React.ReactNode };
+export type ModuleExport = any;
 
 export const ModuleLoaderContext = React.createContext<ModuleLoaderState>(null as any);
 export const ModuleExportsContext = React.createContext<ModuleExport[]>(null as any);

@@ -10,7 +10,8 @@ import { Export } from "../modules/ImportExport/Export";
 import { Import } from "../modules/ImportExport/Import";
 import { KeyboardCommand } from "../modules/KeyboardCommands/KeyboardCommand";
 import { KeyboardCommandsCapture, KeyboardCommandsSuggestions } from "../modules/KeyboardCommands/KeyboardCommands";
-import { ModuleLoaderComponent } from "../modules/ModuleLoader/ModuleLoaderComponent";
+import { AddModule } from "../modules/ModuleLoader/components/AddModule";
+import { ModuleList } from "../modules/ModuleLoader/components/ModuleList";
 import { ModuleExportsContext, ModuleLoader } from "../modules/ModuleLoader/ModuleLoaderContainer";
 import { VisualCommand } from "../modules/VisualCommands/VisualCommand";
 import { VisualCommands } from "../modules/VisualCommands/VisualCommands";
@@ -31,7 +32,8 @@ export const Ide: ObservableView<AstViewState> = ({ value: state, update }) => {
           <Cell key="Extra">
             <Export />
             <Import />
-            <ModuleLoaderComponent />
+            <AddModule />
+            <ModuleList />
           </Cell>
           <Cell key="AstView">
             <ModuleExportsContext.Consumer>
