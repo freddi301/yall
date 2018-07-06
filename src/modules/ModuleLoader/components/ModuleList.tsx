@@ -8,21 +8,21 @@ export const ModuleList = () => (
       const moduleNames = Array.from(moduleLoading.keys());
       return (
         <div>
-          {moduleNames.map(moduleName => {
-            if (moduleError.has(moduleName)) {
-              return (
-                <ModuleItem name={moduleName}>
-                  <ModuleItem.Error error={moduleError.get(moduleName) as Error} />
-                </ModuleItem>
-              );
-            } else if (moduleInstances.has(moduleName)) {
-              return <ModuleItem name={moduleName}>{(moduleInstances.get(moduleName) as ModuleShape).description}</ModuleItem>;
-            } else if (moduleLoading.has(moduleName)) {
-              return <ModuleItem name={moduleName}>Loading...</ModuleItem>;
-            } else {
-              return <ModuleItem name={moduleName}>Unrecognized module</ModuleItem>;
-            }
-          })}
+          {moduleNames.map(moduleName => (
+            <ModuleItem key={moduleName} name={moduleName}>
+              {(() => {
+                if (moduleError.has(moduleName)) {
+                  return <ModuleItem.Error error={moduleError.get(moduleName) as Error} />;
+                } else if (moduleInstances.has(moduleName)) {
+                  return (moduleInstances.get(moduleName) as ModuleShape).description;
+                } else if (moduleLoading.has(moduleName)) {
+                  return "Loading...";
+                } else {
+                  return "Unrecognized module";
+                }
+              })()}
+            </ModuleItem>
+          ))}
         </div>
       );
     }}
