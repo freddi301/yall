@@ -1,9 +1,9 @@
-import * as _ from 'lodash';
-import * as React from 'react';
-import { IdeContext } from '../../Ide/Ide';
+import * as _ from "lodash";
+import * as React from "react";
+import { IdeContext } from "../../Ide/Ide";
 
 const download = ({ text, name, type }: { text: string; name: string; type: string }) => {
-  const a = document.createElement('a');
+  const a = document.createElement("a");
   const file = new Blob([text], { type });
   a.href = URL.createObjectURL(file);
   a.download = name;
@@ -17,7 +17,7 @@ export const Export = () => (
     {({ state: { selected, ast } }) => {
       const selectedAst = _.get(ast, selected, ast);
       const serialized = JSON.stringify(selectedAst, null, 2);
-      return <button onClick={() => download({ text: serialized, name: 'snippet.yall.json', type: 'text/json' })}>export</button>;
+      return <button onClick={() => download({ text: serialized, name: "snippet.yall.json", type: "text/json" })}>export</button>;
     }}
   </IdeContext.Consumer>
 );
